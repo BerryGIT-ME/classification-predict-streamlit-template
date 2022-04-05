@@ -84,7 +84,7 @@ def main():
 			'2': 'News'
 			}
 
-			st.success("Text Categorized as: {}".format(output_text[str(predictions[option])]))
+			st.success("Model: {} - Category: {}".format(option, output_text[str(predictions[option])]))
 
 
 # Required to let Streamlit instantiate our web app.  
