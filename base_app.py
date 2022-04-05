@@ -23,14 +23,10 @@
 """
 # Streamlit dependencies
 import streamlit as st
-import joblib,os
 
 # Data dependencies
 import pandas as pd
-
-# Vectorizer
-news_vectorizer = open("resources/tfidfvect.pkl","rb")
-tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
+from utils import preprocess, predict
 
 # Load your raw data
 raw = pd.read_csv("resources/train.csv")
@@ -48,7 +44,7 @@ def main():
 	# you can create multiple pages this way
 	options = ["Prediction", "Information"]
 	selection = st.sidebar.selectbox("Choose Option", options)
-
+	
 	# Building out the "Information" page
 	if selection == "Information":
 		st.info("General Information")
@@ -64,19 +60,32 @@ def main():
 		st.info("Prediction with ML Models")
 		# Creating a text box for user input
 		tweet_text = st.text_area("Enter Text","Type Here")
+		option = st.selectbox(
+		'Select a model to use',
+		['Support Vector machine', 'Logistic Regression', 'Random Forest', 'Naive bayes'])
 
+		# st.write('model chosen :::', option)
+		
 		if st.button("Classify"):
-			# Transforming user input with vectorizer
-			vect_text = tweet_cv.transform([tweet_text]).toarray()
-			# Load your .pkl file with the model of your choice + make predictions
-			# Try loading in multiple models to give the user a choice
-			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
-			prediction = predictor.predict(vect_text)
+			# convert tweet to dataframe
+			df = pd.DataFrame({'message': [tweet_text]})
 
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
-			st.success("Text Categorized as: {}".format(prediction))
+			# preprocess
+			processed_df = preprocess(df)
+
+			# get predictions
+			predictions = predict(processed_df)
+
+			# select option to choose 
+			output_text = {
+			'0': 'Neutral', 
+			'-1': 'Anti climate change', 
+			'1': 'Pro Climate change', 
+			'2': 'News'
+			}
+
+			st.success("Text Categorized as: {}".format(output_text[str(predictions[option])]))
+
 
 # Required to let Streamlit instantiate our web app.  
 if __name__ == '__main__':
