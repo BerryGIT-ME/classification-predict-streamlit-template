@@ -160,3 +160,9 @@ def predict(df):
               'Naive bayes': i_MNB2.predict(interim)[0],
              }
     return output
+
+def get_random_sample(df):
+    text = ""
+    for message in df.sample()['message']:
+        text = message
+    return text

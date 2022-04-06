@@ -26,15 +26,16 @@ import streamlit as st
 
 # Data dependencies
 import pandas as pd
-from utils import preprocess, predict
+from utils import preprocess, predict, get_random_sample
 
 # Load your raw data
-raw = pd.read_csv("resources/train.csv")
+raw = pd.read_csv("resources/test.csv")
 
 # The main function where we will build the actual app
 def main():
 	"""Tweet Classifier App with Streamlit """
-
+	#  get random tweet sample
+	text = get_random_sample(raw)
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
 	st.title("Tweet Classifer")
@@ -54,17 +55,20 @@ def main():
 		st.subheader("Raw Twitter data and label")
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
 			st.write(raw[['sentiment', 'message']]) # will write the df to the page
-
+	
 	# Building out the predication page
 	if selection == "Prediction":
 		st.info("Prediction with ML Models")
 		# Creating a text box for user input
-		tweet_text = st.text_area("Enter Text","Type Here")
+		if st.button("Get random tweet"):
+			text = get_random_sample(raw)
+			print()
+		st.text_area("Random tweet sample", text)
+
+		tweet_text = st.text_area("Text to predict","Type Here")
 		option = st.selectbox(
 		'Select a model to use',
 		['Support Vector machine', 'Logistic Regression', 'Random Forest', 'Naive bayes'])
-
-		# st.write('model chosen :::', option)
 		
 		if st.button("Classify"):
 			# convert tweet to dataframe
@@ -85,7 +89,10 @@ def main():
 			}
 
 			st.success("Model: {} - Category: {}".format(option, output_text[str(predictions[option])]))
-
+		
+	
+		
+					
 
 # Required to let Streamlit instantiate our web app.  
 if __name__ == '__main__':
