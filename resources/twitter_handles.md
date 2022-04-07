@@ -1,0 +1,1 @@
+##### We next looked at some of the most frequently occurring twitter handles and hashtags in the dataset for the different sentiments. Here are the top few. There presence can serve as good indicators for a particular sentiment

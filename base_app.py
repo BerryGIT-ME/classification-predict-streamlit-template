@@ -26,7 +26,7 @@ import streamlit as st
 
 # Data dependencies
 import pandas as pd
-from utils import preprocess, predict, get_random_sample
+from utils import preprocess, predict, get_random_sample, get_markdown
 
 # Load your raw data
 raw_test = pd.read_csv("resources/test.csv")
@@ -49,12 +49,9 @@ def main():
 	
 	# Building out the "Information" page
 	if selection == "Information":
-		with open('./resources/info.md', 'r') as file:
-			markdown_text = file.read()
-
 		st.info("General Information")
 		# You can read a markdown file from supporting resources folder
-		st.markdown(markdown_text)
+		st.markdown(get_markdown('./resources/info.md'))
 
 		st.subheader("Raw Twitter data and label")
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
@@ -62,28 +59,26 @@ def main():
 
 	# Building out the "EDA" page
 	if selection == "Explore the data":
-		with open('./resources/eda.md', 'r') as file:
-			markdown_text = file.read()
 		
 		st.info("Lets us explore the data used in training our model")
 		# You can read a markdown file from supporting resources folder
 		# looked at the classes
-		st.markdown("### We looked at the classes")
+		st.markdown(get_markdown('./resources/classes.md'))
 		st.image('resources/imgs/classes.png')
 
 		# looked at the wordcloud
-		st.markdown("### We looked at the wordcloud")
+		st.markdown(get_markdown('./resources/word_cloud.md'))
 		st.image('resources/imgs/anti_climate.png')
 
 		# looked at the handles
-		st.markdown("### We looked at the twitter handles")
+		st.markdown(get_markdown('./resources/twitter_handles.md'))
 		st.image('resources/imgs/anti_handles.png')
 		st.image('resources/imgs/pro_handles.png')
 		st.image('resources/imgs/neutral_handles.png')
 		st.image('resources/imgs/news_handles.png')
 
 		# looked at hashtags
-		st.markdown("### We looked at the hashtags")
+		st.markdown("### Here are the plot for hashtags")
 		st.image('resources/imgs/anti_hashtags.png')
 		st.image('resources/imgs/pro_hashtags.png')
 		st.image('resources/imgs/neutral_hashtags.png')

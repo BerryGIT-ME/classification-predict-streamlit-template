@@ -1,3 +1,4 @@
+from fileinput import filename
 import string
 import pandas as pd
 import pickle
@@ -166,3 +167,8 @@ def get_random_sample(df):
     for message in df.sample()['message']:
         text = message
     return text
+
+def get_markdown(file_name):
+    with open(file_name, 'r') as file:
+        markdown_text = file.read()
+    return markdown_text
