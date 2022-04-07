@@ -31,7 +31,6 @@ from utils import preprocess, predict, get_random_sample
 # Load your raw data
 raw_test = pd.read_csv("resources/test.csv")
 raw_train = pd.read_csv("resources/train.csv")
-pd.set_option('max_colwidth', None)
 
 # The main function where we will build the actual app
 def main():
@@ -66,18 +65,38 @@ def main():
 		with open('./resources/eda.md', 'r') as file:
 			markdown_text = file.read()
 		
-		st.info("General Information")
+		st.info("Lets us explore the data used in training our model")
 		# You can read a markdown file from supporting resources folder
-		st.markdown(markdown_text, unsafe_allow_html=True)
+		# looked at the classes
+		st.markdown("### We looked at the classes")
+		st.image('resources/imgs/classes.png')
+
+		# looked at the wordcloud
+		st.markdown("### We looked at the wordcloud")
 		st.image('resources/imgs/anti_climate.png')
 
-	if selection == "The team":
-		with open('./resources/eda.md', 'r') as file:
-			markdown_text = file.read()
-		
-		st.info("General Information")
+		# looked at the handles
+		st.markdown("### We looked at the twitter handles")
+		st.image('resources/imgs/anti_handles.png')
+		st.image('resources/imgs/pro_handles.png')
+		st.image('resources/imgs/neutral_handles.png')
+		st.image('resources/imgs/news_handles.png')
+
+		# looked at hashtags
+		st.markdown("### We looked at the hashtags")
+		st.image('resources/imgs/anti_hashtags.png')
+		st.image('resources/imgs/pro_hashtags.png')
+		st.image('resources/imgs/neutral_hashtags.png')
+		st.image('resources/imgs/news_hashtag.png')
+
+		# Conclusion/Improvements
+		st.markdown("### More data is required to improve the current performace of the model")
+		st.image('resources/imgs/balance.png')
+
+	if selection == "The team":		
+		st.info("Our Word class team")
 		# You can read a markdown file from supporting resources folder
-		st.markdown(markdown_text, unsafe_allow_html=True)
+		st.markdown("### Out team is made up of highly dedicated and skilled Data Scientist")
 		st.image('resources/imgs/The_team.png')
 
 	# Building out the predication page
