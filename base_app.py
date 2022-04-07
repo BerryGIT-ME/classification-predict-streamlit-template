@@ -85,7 +85,7 @@ def main():
 		st.image('resources/imgs/news_hashtag.png')
 
 		# Conclusion/Improvements
-		st.markdown("### More data is required to improve the current performace of the model")
+		st.markdown(get_markdown('./resources/Improvements.md'))
 		st.image('resources/imgs/balance.png')
 
 	if selection == "The team":		
