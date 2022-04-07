@@ -35,10 +35,10 @@ raw = pd.read_csv("resources/test.csv")
 def main():
 	"""Tweet Classifier App with Streamlit """
 	#  get random tweet sample
-	text = get_random_sample(raw)
+	text = "text"
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	st.title("Tweet Classifer")
+	st.title("Data Blaze Inc Tweet Classifer Demo")
 	st.subheader("Climate change tweet classification")
 
 	# Creating sidebar with selection box -
@@ -54,7 +54,7 @@ def main():
 
 		st.subheader("Raw Twitter data and label")
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
-			st.write(raw[['sentiment', 'message']]) # will write the df to the page
+			st.write(raw[['message']]) # will write the df to the page
 	
 	# Building out the predication page
 	if selection == "Prediction":
