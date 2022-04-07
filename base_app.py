@@ -31,6 +31,7 @@ from utils import preprocess, predict, get_random_sample
 # Load your raw data
 raw_test = pd.read_csv("resources/test.csv")
 raw_train = pd.read_csv("resources/train.csv")
+pd.set_option('max_colwidth', None)
 
 # The main function where we will build the actual app
 def main():
@@ -44,7 +45,7 @@ def main():
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
-	options = ["Prediction", "Information", 'Explore the data']
+	options = ["Prediction", "Information", 'Explore the data', 'The team']
 	selection = st.sidebar.selectbox("Choose Option", options)
 	
 	# Building out the "Information" page
@@ -60,17 +61,25 @@ def main():
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
 			st.write(raw_train[['message', 'sentiment']]) # will write the df to the page
 
+	# Building out the "EDA" page
 	if selection == "Explore the data":
-		with open('./resources/info.md', 'r') as file:
+		with open('./resources/eda.md', 'r') as file:
 			markdown_text = file.read()
-
+		
 		st.info("General Information")
 		# You can read a markdown file from supporting resources folder
-		st.markdown(markdown_text)
+		st.markdown(markdown_text, unsafe_allow_html=True)
+		st.image('resources/imgs/anti_climate.png')
 
-		st.subheader("Raw Twitter data and label")
-		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
-			st.write(raw_test[['message']]) # will write the df to the page
+	if selection == "The team":
+		with open('./resources/eda.md', 'r') as file:
+			markdown_text = file.read()
+		
+		st.info("General Information")
+		# You can read a markdown file from supporting resources folder
+		st.markdown(markdown_text, unsafe_allow_html=True)
+		st.image('resources/imgs/The_team.png')
+
 	# Building out the predication page
 	if selection == "Prediction":
 		st.info("Prediction with ML Models")
